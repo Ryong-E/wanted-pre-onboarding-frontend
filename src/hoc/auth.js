@@ -1,11 +1,12 @@
 import { useEffect } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
 import { ROUTE } from '../constant/route';
 
+// eslint-disable-next-line import/no-anonymous-default-export
 export default function (RequestedComponent, option) {
   function AuthenticationCheck() {
     const navigate = useNavigate();
-    const { pathname, state } = useLocation();
 
     useEffect(() => {
       const isToken = localStorage.getItem('jwtToken');
@@ -20,9 +21,33 @@ export default function (RequestedComponent, option) {
           navigate(ROUTE.HOME.link);
         }
       }
+      // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
-    return <RequestedComponent />;
+    return (
+      <Wrap>
+        <Container>
+          <RequestedComponent />
+        </Container>
+      </Wrap>
+    );
   }
 
   return AuthenticationCheck;
 }
+
+const Wrap = styled.main`
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const Container = styled.div`
+  width: 100%;
+  max-width: 640px;
+  padding-top: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
