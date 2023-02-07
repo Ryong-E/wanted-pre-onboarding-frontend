@@ -1,19 +1,23 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useContext } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import { LoginContext } from '../App';
 
 function Header() {
   const isToken = localStorage.getItem('jwtToken');
-
+  const naviagate = useNavigate();
+  const [, setIsLogin] = useContext(LoginContext);
   const logOut = () => {
-    console.log('로그아웃 예정');
+    localStorage.removeItem('jwtToken');
+    setIsLogin(false);
+    naviagate('/');
   };
 
   return (
     <Nav>
       <NavContainer>
         <Logo>
-          <Link to="/">뚜두뚜두</Link>
+          <Link to={isToken ? '/todo' : '/'}>뚜두뚜두</Link>
         </Logo>
         <NavContentContainer>
           <NavMenu>

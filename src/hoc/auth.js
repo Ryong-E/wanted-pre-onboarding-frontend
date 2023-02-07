@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { ROUTE } from '../constant/route';
@@ -6,6 +6,7 @@ import { ROUTE } from '../constant/route';
 // eslint-disable-next-line import/no-anonymous-default-export
 export default function (RequestedComponent, option) {
   function AuthenticationCheck() {
+    const [isCheck, setIsCheck] = useState(false);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -21,14 +22,17 @@ export default function (RequestedComponent, option) {
           navigate(ROUTE.HOME.link);
         }
       }
-      // eslint-disable-next-line react-hooks/exhaustive-deps
+      setIsCheck(true);
     }, []);
+
     return (
-      <Wrap>
-        <Container>
-          <RequestedComponent />
-        </Container>
-      </Wrap>
+      isCheck && (
+        <Wrap>
+          <Container>
+            <RequestedComponent />
+          </Container>
+        </Wrap>
+      )
     );
   }
 
