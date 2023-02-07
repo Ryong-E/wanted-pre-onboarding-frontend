@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-function useGetApi(api, { onSuccess }) {
+function useGetApi(api, { onSuccess } = {}) {
   const [data, setData] = useState();
   const [isLoading, setIsLoading] = useState(false);
 
@@ -10,7 +10,7 @@ function useGetApi(api, { onSuccess }) {
       await api().then((get) => {
         setIsLoading(false);
         setData(get);
-        onSuccess(get);
+        if (onSuccess !== undefined) onSuccess(get);
       });
     } catch (error) {}
   };
