@@ -1,8 +1,9 @@
 import React, { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { loginUser, registerUser } from '../../api/auth';
+import { loginUserApi, registerUserApi } from '../../api/auth';
 import { LoginContext } from '../../App';
+import LargeButton from '../buttons/LargeButton';
 
 function AuthForm({ mode }) {
   const [idError, setIdError] = useState(null);
@@ -12,7 +13,7 @@ function AuthForm({ mode }) {
   const [, setIsLogin] = useContext(LoginContext);
   const navigate = useNavigate();
 
-  const handleIdChange = (e) => {
+  const idValidate = (e) => {
     const ID_REGEX = /@/;
     setEnterId(e.target.value);
     if (e.target.value === '') return setIdError('아이디를 입력해주세요');
@@ -20,7 +21,7 @@ function AuthForm({ mode }) {
     setIdError('@를 포함해주세요');
   };
 
-  const handlePasswordChange = (e) => {
+  const passwordValidate = (e) => {
     const PASSWORD_REGEX = /\w{8,}/;
     setEnterPassword(e.target.value);
     if (e.target.value === '') return setPasswordError('비밀번호를 입력해주세요');
@@ -29,40 +30,47 @@ function AuthForm({ mode }) {
   };
 
   const handleSubmit = async () => {
-    if (mode === 'login') {
-      const result = await loginUser(enterId, enterPassword);
-      localStorage.setItem('jwtToken', result.access_token);
-      setIsLogin(true);
-      navigate('/todo');
-      return;
-    }
+    try {
+      if (mode === 'login') {
+        const result = await loginUserApi(enterId, enterPassword);
+        localStorage.setItem('jwtToken', result.access_token);
+        setIsLogin(true);
+        navigate('/todo');
+        return;
+      }
 
-    const result = await registerUser(enterId, enterPassword);
-    alert('회원가입성공');
-    navigate('/signin');
+      await registerUserApi(enterId, enterPassword);
+      navigate('/signin');
+    } catch (error) {
+      if (error.status === 401) {
+        return alert('비밀번호를 확인해주세요');
+      }
+      alert(error.data.message);
+    }
   };
 
   return (
     <LoginContainer>
       <Box>
         <InforWord>아이디</InforWord>
-        <Input type="text" onChange={handleIdChange} data-testid="email-input"></Input>
+        <Input type="text" onChange={idValidate} data-testid="email-input"></Input>
         <ErrorMessage>{idError}</ErrorMessage>
       </Box>
       <Box>
         <InforWord>비밀번호</InforWord>
-        <Input type="password" onChange={handlePasswordChange} data-testid="password-input"></Input>
+        <Input type="password" onChange={passwordValidate} data-testid="password-input"></Input>
         <ErrorMessage>{passwordError}</ErrorMessage>
       </Box>
       <Box>
-        <SubmitButton
+        <LargeButton
+          color={mode === 'login' ? 'rgb(166, 141, 202)' : 'rgb(192, 222, 255)'}
           disabled={idError === true && passwordError === true ? false : true}
           onClick={handleSubmit}
           data-testid="signin-button"
           mode={mode}
         >
           {mode === 'register' ? '회원가입' : '로그인'}
-        </SubmitButton>
+        </LargeButton>
       </Box>
     </LoginContainer>
   );
@@ -105,16 +113,4 @@ const Input = styled.input`
   text-align: center;
 `;
 
-const SubmitButton = styled.button`
-  width: 100%;
-  height: 40px;
-  background-color: ${(props) =>
-    props.mode === 'login' ? 'rgb(166, 141, 202)' : 'rgb(192, 222, 255)'};
-  border-radius: 12px;
-  color: white;
-  &:disabled {
-    background-color: rgb(217, 217, 217);
-    cursor: not-allowed;
-  }
-`;
 export default AuthForm;
