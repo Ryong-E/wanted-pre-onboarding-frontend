@@ -19,7 +19,7 @@ export default function (RequestedComponent, option) {
         }
       } else {
         if (option === false) {
-          navigate(ROUTE.HOME.link);
+          navigate(ROUTE.TODO.link);
         }
       }
       setIsCheck(true);
@@ -50,7 +50,7 @@ const Wrap = styled.main`
 const Container = styled.div`
   width: 100%;
   max-width: 640px;
-  padding-top: 50px;
+  height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
