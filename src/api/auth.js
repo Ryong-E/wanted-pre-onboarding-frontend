@@ -5,9 +5,8 @@ const authApi = axios.create({
   headers: { 'Content-Type': 'application/json' },
 });
 
-export const loginUser = async (email, password) => {
+export const loginUserApi = async (email, password) => {
   try {
-    console.log(process.env.REACT_APP_BASE_URL);
     const data = await authApi.post('auth/signin', { email, password });
     return data;
   } catch (error) {
@@ -15,7 +14,7 @@ export const loginUser = async (email, password) => {
   }
 };
 
-export const registerUser = async (email, password) => {
+export const registerUserApi = async (email, password) => {
   try {
     const data = await authApi.post('auth/signup', { email, password });
     return data;
