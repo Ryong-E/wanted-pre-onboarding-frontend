@@ -1,25 +1,24 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { deleteTodoApi, updateTodoApi } from '../../api/todo';
 
-function TodoContent({ data, refetch, todoDelete, todoUpdate }) {
+function TodoContent({ data, deleteTodo, updateTodo }) {
   const [isWrite, setIsWrite] = useState(false);
-  const checkRef = useRef();
-  const [editContent, setEditContent] = useState(false);
+  const [editContent, setEditContent] = useState('');
   const [checked, setChecked] = useState(false);
   const { todo, id, isCompleted } = data;
 
   const handleCheck = async (value) => {
     setChecked(value);
-    todoUpdate(id, editContent, value);
+    updateTodo(id, editContent, value);
     await updateTodoApi(editContent, id, value);
   };
 
   const handleModify = async () => {
     if (isWrite) {
-      const isCompleted = checkRef.current.checked;
+      if (editContent === '') return alert('할 일을 작성해주세요');
       await updateTodoApi(editContent, id, isCompleted);
-      todoUpdate(id, editContent, isCompleted);
+      updateTodo(id, editContent, isCompleted);
       setIsWrite(false);
       return;
     }
@@ -33,7 +32,7 @@ function TodoContent({ data, refetch, todoDelete, todoUpdate }) {
     }
 
     await deleteTodoApi(id);
-    todoDelete(id);
+    deleteTodo(id);
   };
 
   useEffect(() => {
@@ -44,12 +43,7 @@ function TodoContent({ data, refetch, todoDelete, todoUpdate }) {
   return (
     <Todo>
       <TodoContainer>
-        <input
-          type="checkbox"
-          onChange={(e) => handleCheck(e.target.checked)}
-          checked={checked}
-          ref={checkRef}
-        />
+        <input type="checkbox" onChange={(e) => handleCheck(e.target.checked)} checked={checked} />
         <div>
           {isWrite ? (
             <input
