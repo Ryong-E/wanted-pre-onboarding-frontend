@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { deleteTodoApi, updateTodoApi } from '../../api/todo';
 
-function TodoContent({ data, deleteTodo, updateTodo }) {
+const TodoContent = ({ data, deleteTodo, updateTodo }) => {
   const [isWrite, setIsWrite] = useState(false);
   const [editContent, setEditContent] = useState('');
   const [checked, setChecked] = useState(false);
@@ -65,7 +65,7 @@ function TodoContent({ data, deleteTodo, updateTodo }) {
       </TodoContainer>
     </Todo>
   );
-}
+};
 
 const Todo = styled.li``;
 const TodoContainer = styled.div`

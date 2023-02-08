@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { LoginContext } from '../App';
 
-function Header() {
+const Header = () => {
   const isToken = localStorage.getItem('jwtToken');
   const naviagate = useNavigate();
   const [, setIsLogin] = useContext(LoginContext);
@@ -38,7 +38,7 @@ function Header() {
       </NavContainer>
     </Nav>
   );
-}
+};
 
 const Nav = styled.nav`
   width: 100%;

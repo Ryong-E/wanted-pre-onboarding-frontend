@@ -5,7 +5,7 @@ import { ROUTE } from '../constant/route';
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default function (RequestedComponent, option) {
-  function AuthenticationCheck() {
+  const AuthenticationCheck = () => {
     const [isCheck, setIsCheck] = useState(false);
     const navigate = useNavigate();
 
@@ -34,7 +34,7 @@ export default function (RequestedComponent, option) {
         </Wrap>
       )
     );
-  }
+  };
 
   return AuthenticationCheck;
 }

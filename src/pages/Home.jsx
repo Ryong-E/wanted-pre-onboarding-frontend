@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import LargeButton from '../components/buttons/LargeButton';
 
-function Home() {
+const Home = () => {
   const navigate = useNavigate();
 
   const handleClick = (path) => {
@@ -20,7 +20,7 @@ function Home() {
       </LargeButton>
     </LinkButtonContainer>
   );
-}
+};
 
 const LinkButtonContainer = styled.div`
   width: 100%;

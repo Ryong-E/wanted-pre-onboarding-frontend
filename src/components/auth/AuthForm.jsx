@@ -5,7 +5,7 @@ import { loginUserApi, registerUserApi } from '../../api/auth';
 import { LoginContext } from '../../App';
 import LargeButton from '../buttons/LargeButton';
 
-function AuthForm({ mode }) {
+const AuthForm = ({ mode }) => {
   const [idError, setIdError] = useState(null);
   const [passwordError, setPasswordError] = useState(null);
   const [enterId, setEnterId] = useState();
@@ -74,7 +74,7 @@ function AuthForm({ mode }) {
       </Box>
     </LoginContainer>
   );
-}
+};
 
 const ErrorMessage = styled.p`
   margin-top: 10px;

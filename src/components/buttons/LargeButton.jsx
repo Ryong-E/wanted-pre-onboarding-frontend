@@ -1,13 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
 
-function LargeButton({ color, children, onClick, mode, disabled }) {
+const LargeButton = ({ color, children, onClick, mode, disabled }) => {
   return (
     <Button color={color} onClick={onClick} disabled={disabled}>
       {children}
     </Button>
   );
-}
+};
 
 const Button = styled.button`
   width: 100%;

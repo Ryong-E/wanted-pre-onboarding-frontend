@@ -1,8 +1,8 @@
 import React from 'react';
 import AuthForm from '../components/auth/AuthForm';
 
-function SignIn() {
+const SignIn = () => {
   return <AuthForm mode="login" />;
-}
+};
 
 export default SignIn;

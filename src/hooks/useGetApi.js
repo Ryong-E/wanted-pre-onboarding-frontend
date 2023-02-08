@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-function useGetApi(api, { onSuccess } = {}) {
+const useGetApi = (api, { onSuccess } = {}) => {
   const [data, setData] = useState();
   const [isLoading, setIsLoading] = useState(false);
 
@@ -24,6 +24,6 @@ function useGetApi(api, { onSuccess } = {}) {
   }, []);
 
   return { data, refetch, isLoading };
-}
+};
 
 export default useGetApi;

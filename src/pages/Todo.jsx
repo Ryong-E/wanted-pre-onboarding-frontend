@@ -4,7 +4,7 @@ import { createTodoApi, getTodosApi } from '../api/todo';
 import TodoContent from '../components/todo/TodoContent';
 import useGetApi from '../hooks/useGetApi';
 
-function Todo() {
+const Todo = () => {
   const [todos, setTodos] = useState([]);
   const [enterTodo, setEnterTodo] = useState('');
   const { isLoading, refetch } = useGetApi(getTodosApi, {
@@ -24,7 +24,7 @@ function Todo() {
     });
   };
 
-  function updateTodo(id, content, isCompleted) {
+  const updateTodo = (id, content, isCompleted) => {
     setTodos((data) => {
       const result = [...data].map((data) => {
         if (data.id === id) {
@@ -34,12 +34,12 @@ function Todo() {
       });
       return result;
     });
-  }
+  };
 
-  function deleteTodo(id) {
+  const deleteTodo = (id) => {
     const filted = todos.filter((todo) => todo.id !== id);
     setTodos(filted);
-  }
+  };
 
   return (
     <TodoContainer>
@@ -73,7 +73,7 @@ function Todo() {
       {!isLoading && todos.length === 0 && <div>할 일 목록이 없습니다</div>}
     </TodoContainer>
   );
-}
+};
 
 const TodoInputContainer = styled.div`
   display: flex;
