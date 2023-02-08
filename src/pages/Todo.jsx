@@ -15,11 +15,11 @@ function Todo() {
 
   const createTodo = async () => {
     if (enterTodo === '') return alert('할 일을 입력해주세요');
-    await createTodoApi(enterTodo);
+    const createdTodo = await createTodoApi(enterTodo);
     setEnterTodo('');
     setTodos((data) => {
       const result = [...data];
-      result.push(result);
+      result.push(createdTodo);
       return result;
     });
   };
